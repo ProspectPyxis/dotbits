@@ -7,7 +7,7 @@ pub trait BitManip {
     /// Converts the implementor type into a `Vec<bool>`.
     ///
     /// The resulting vector is formatted in little-endian. To get the vector in big-endian,
-    /// reverse the array.
+    /// `reverse()` the vector.
     fn bits(&self) -> Vec<bool>;
 
     /// Gets the length of the implementor type in bits.
