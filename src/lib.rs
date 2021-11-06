@@ -10,6 +10,9 @@ pub trait BitManip {
     /// reverse the array.
     fn bits(&self) -> Vec<bool>;
 
+    /// Gets the length of the implementor type in bits.
+    fn bit_len() -> usize;
+
     /// Gets the bit at a specific position.
     ///
     /// # Panics
@@ -61,23 +64,28 @@ macro_rules! bitmanip_impl {
             fn bits(&self) -> Vec<bool> {
                 let mut v: Vec<bool> = Vec::new();
 
-                for i in 0..Self::BITS {
-                    v.push(self.bit_get(i as usize));
+                for i in 0..Self::bit_len() {
+                    v.push(self.bit_get(i));
                 }
 
                 v
             }
 
             #[inline]
+            fn bit_len() -> usize {
+                Self::BITS as usize
+            }
+
+            #[inline]
             fn bit_get(&self, pos: usize) -> bool {
-                assert!(pos < Self::BITS as usize);
+                assert!(pos < Self::bit_len());
 
                 *self & (1 << pos) != 0
             }
 
             #[inline]
             fn bit_set(&mut self, pos: usize, val: bool) -> &mut Self {
-                assert!(pos < Self::BITS as usize);
+                assert!(pos < Self::bit_len());
 
                 *self ^= (Self::MIN.wrapping_sub(val.into()) ^ *self) & (1 << pos);
 
