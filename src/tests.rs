@@ -28,6 +28,13 @@ fn bit_set_err() {
 }
 
 #[test]
+fn bit_rev() {
+    assert_eq!(*0b00001111u8.bit_rev(), 0b11110000u8);
+    assert_eq!(*0b00110011u8.bit_rev(), 0b11001100u8);
+    assert_eq!(*0b10101010u8.bit_rev(), 0b01010101u8);
+}
+
+#[test]
 fn bit_vec() {
     assert_eq!(
         0b01010101u8.bits(),
