@@ -27,6 +27,36 @@ pub trait BitVec {
     /// Returns a vector of all positions that are `false`.
     fn zeroes(&self) -> Vec<usize>;
 
+    /// Sets a particular position in the vector to a specific boolean.
+    ///
+    /// # Errors
+    ///
+    /// Will return `Err(Error::PosOutOfBounds)` if the vector is smaller than the index, e.g. `pos
+    /// >= self.len()`.
+    fn set(&mut self, pos: usize, val: bool) -> Result<&mut Self, Error>;
+
+    /// Equivalent to `set(&mut self, pos: usize, true)`.
+    ///
+    /// # Errors
+    ///
+    /// Will return `Err(Error::PosOutOfBounds)` if the vector is smaller than the index, e.g. `pos
+    /// >= self.len()`.
+    #[inline]
+    fn set_on(&mut self, pos: usize) -> Result<&mut Self, Error> {
+        self.set(pos, true)
+    }
+
+    /// Equivalent to `set(&mut self, pos: usize, false)`.
+    ///
+    /// # Errors
+    ///
+    /// Will return `Err(Error::PosOutOfBounds)` if the vector is smaller than the index, e.g. `pos
+    /// >= self.len()`.
+    #[inline]
+    fn set_off(&mut self, pos: usize) -> Result<&mut Self, Error> {
+        self.set(pos, false)
+    }
+
     /// Attempts to convert into a `u8`. This returns an error if the converted value would
     /// overflow the type.
     fn try_into_u8(&self) -> Result<u8, Error>;
@@ -77,6 +107,16 @@ impl BitVec for Vec<bool> {
         }
 
         v
+    }
+
+    #[inline]
+    fn set(&mut self, pos: usize, val: bool) -> Result<&mut Self, Error> {
+        if pos >= self.len() {
+            return Err(Error::PosOutOfBounds);
+        }
+
+        self[pos] = val;
+        Ok(self)
     }
 
     bitvec_try_into!(
