@@ -40,3 +40,12 @@ fn bit_vec_zeroes() {
     assert_eq!(0b01001111u8.bits().zeroes(), vec![4, 5, 7]);
     assert_eq!(0b00001111u8.bits().zeroes(), vec![4, 5, 6, 7]);
 }
+
+#[test]
+fn bit_vec_try_into() {
+    assert_eq!(128u8.bits().try_into_u8().unwrap(), 128u8);
+    assert_eq!(128u16.bits().try_into_u16().unwrap(), 128u16);
+    assert_eq!(128u32.bits().try_into_u32().unwrap(), 128u32);
+    assert_eq!(128u64.bits().try_into_u64().unwrap(), 128u64);
+    assert_eq!(128u128.bits().try_into_u128().unwrap(), 128u128);
+}
