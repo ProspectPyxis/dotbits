@@ -57,28 +57,58 @@ pub trait BitVec {
         self.set(pos, false)
     }
 
-    /// Attempts to convert into a `u8`. This returns an error if the converted value would
-    /// overflow the type.
+    /// Attempts to convert into a `u8`. The vector does not have to be the exact size to convert
+    /// successfully.
+    ///
+    /// # Errors
+    ///
+    /// Will return `Err(Error::ConversionOverflow)` if the resulting value would overflow the
+    /// type.
     fn try_into_u8(&self) -> Result<u8, Error>;
 
-    /// Attempts to convert into a `u16`. This returns an error if the converted value would
-    /// overflow the type.
+    /// Attempts to convert into a `u16`. The vector does not have to be the exact size to convert
+    /// successfully.
+    ///
+    /// # Errors
+    ///
+    /// Will return `Err(Error::ConversionOverflow)` if the resulting value would overflow the
+    /// type.
     fn try_into_u16(&self) -> Result<u16, Error>;
 
-    /// Attempts to convert into a `u32`. This returns an error if the converted value would
-    /// overflow the type.
+    /// Attempts to convert into a `u32`. The vector does not have to be the exact size to convert
+    /// successfully.
+    ///
+    /// # Errors
+    ///
+    /// Will return `Err(Error::ConversionOverflow)` if the resulting value would overflow the
+    /// type.
     fn try_into_u32(&self) -> Result<u32, Error>;
 
-    /// Attempts to convert into a `u64`. This returns an error if the converted value would
-    /// overflow the type.
+    /// Attempts to convert into a `u64`. The vector does not have to be the exact size to convert
+    /// successfully.
+    ///
+    /// # Errors
+    ///
+    /// Will return `Err(Error::ConversionOverflow)` if the resulting value would overflow the
+    /// type.
     fn try_into_u64(&self) -> Result<u64, Error>;
 
-    /// Attempts to convert into a `u128`. This returns an error if the converted value would
-    /// overflow the type.
+    /// Attempts to convert into a `u128`. The vector does not have to be the exact size to convert
+    /// successfully.
+    ///
+    /// # Errors
+    ///
+    /// Will return `Err(Error::ConversionOverflow)` if the resulting value would overflow the
+    /// type.
     fn try_into_u128(&self) -> Result<u128, Error>;
 
-    /// Attempts to convert into a `usize`. This returns an error if the converted value would
-    /// overflow the type.
+    /// Attempts to convert into a `usize`. The vector does not have to be the exact size to convert
+    /// successfully.
+    ///
+    /// # Errors
+    ///
+    /// Will return `Err(Error::ConversionOverflow)` if the resulting value would overflow the
+    /// type.
     fn try_into_usize(&self) -> Result<usize, Error>;
 }
 
