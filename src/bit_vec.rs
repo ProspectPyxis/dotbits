@@ -1,8 +1,10 @@
+use crate::Error;
+
 macro_rules! bitvec_try_into {
     ($($i:ident = $t:ty),*) => {$(
-        fn $i(&self) -> Result<$t, &'static str> {
+        fn $i(&self) -> Result<$t, Error> {
             if self.iter().skip(<$t>::BITS as usize).any(|&x| x) {
-                return Err("overflow");
+                return Err(Error::PosOutOfBounds);
             }
 
             let mut v: $t = 0;
@@ -27,27 +29,27 @@ pub trait BitVec {
 
     /// Attempts to convert into a `u8`. This returns an error if the converted value would
     /// overflow the type.
-    fn try_into_u8(&self) -> Result<u8, &'static str>;
+    fn try_into_u8(&self) -> Result<u8, Error>;
 
     /// Attempts to convert into a `u16`. This returns an error if the converted value would
     /// overflow the type.
-    fn try_into_u16(&self) -> Result<u16, &'static str>;
+    fn try_into_u16(&self) -> Result<u16, Error>;
 
     /// Attempts to convert into a `u32`. This returns an error if the converted value would
     /// overflow the type.
-    fn try_into_u32(&self) -> Result<u32, &'static str>;
+    fn try_into_u32(&self) -> Result<u32, Error>;
 
     /// Attempts to convert into a `u64`. This returns an error if the converted value would
     /// overflow the type.
-    fn try_into_u64(&self) -> Result<u64, &'static str>;
+    fn try_into_u64(&self) -> Result<u64, Error>;
 
     /// Attempts to convert into a `u128`. This returns an error if the converted value would
     /// overflow the type.
-    fn try_into_u128(&self) -> Result<u128, &'static str>;
+    fn try_into_u128(&self) -> Result<u128, Error>;
 
     /// Attempts to convert into a `usize`. This returns an error if the converted value would
     /// overflow the type.
-    fn try_into_usize(&self) -> Result<usize, &'static str>;
+    fn try_into_usize(&self) -> Result<usize, Error>;
 }
 
 impl BitVec for Vec<bool> {
