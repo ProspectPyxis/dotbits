@@ -73,9 +73,36 @@ fn bit_vec_set() {
 
 #[test]
 fn bit_vec_try_into() {
-    assert_eq!(128u8.bits().try_into_u8().unwrap(), 128u8);
-    assert_eq!(128u16.bits().try_into_u16().unwrap(), 128u16);
-    assert_eq!(128u32.bits().try_into_u32().unwrap(), 128u32);
-    assert_eq!(128u64.bits().try_into_u64().unwrap(), 128u64);
-    assert_eq!(128u128.bits().try_into_u128().unwrap(), 128u128);
+    assert_eq!(
+        vec![false, false, false, false, false, false, false, true]
+            .try_into_u8()
+            .expect("conversion failed"),
+        128
+    );
+    assert_eq!(
+        vec![true, false, true, false, false, false, true, true]
+            .try_into_u8()
+            .expect("conversion failed"),
+        197
+    );
+    assert_eq!(
+        vec![false, true, false, true, false, false, true, false]
+            .try_into_u8()
+            .expect("conversion failed"),
+        74
+    );
+}
+
+#[test]
+fn bit_vec_try_into_unequal_bits() {
+    assert_eq!(
+        128u32.bits().try_into_u8().expect("conversion failed"),
+        128u8
+    );
+    assert_eq!(
+        vec![true, true, true, true, false, false, false, false, false, false]
+            .try_into_u8()
+            .expect("conversion failed"),
+        0b00001111u8
+    );
 }
