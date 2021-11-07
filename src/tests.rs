@@ -1,4 +1,4 @@
-use crate::BitManip;
+use crate::{BitManip, BitVec};
 
 #[test]
 fn bit_get() {
@@ -25,4 +25,18 @@ fn bit_set_err() {
     assert!(0u8.bit_set(8, true).is_err());
     assert!(0u8.bit_on(9).is_err());
     assert!(0u8.bit_off(10).is_err());
+}
+
+#[test]
+fn bit_vec_ones() {
+    assert_eq!(0b00111000u8.bits().ones(), vec![3, 4, 5]);
+    assert_eq!(0b10000000u8.bits().ones(), vec![7]);
+    assert_eq!(0b01000010u8.bits().ones(), vec![1, 6]);
+}
+
+#[test]
+fn bit_vec_zeroes() {
+    assert_eq!(0b11001100u8.bits().zeroes(), vec![0, 1, 4, 5]);
+    assert_eq!(0b01001111u8.bits().zeroes(), vec![4, 5, 7]);
+    assert_eq!(0b00001111u8.bits().zeroes(), vec![4, 5, 6, 7]);
 }
