@@ -112,3 +112,15 @@ fn bit_vec_try_into_unequal_bits() {
         0b1010u8
     );
 }
+
+#[test]
+fn bit_vec_try_into_error() {
+    assert!(u32::MAX.bits().try_into_u8().is_err());
+    assert!(u32::MAX.bits().try_into_u16().is_err());
+    assert!((u32::MAX as u64 + 1).bits().try_into_u32().is_err());
+    assert!(
+        vec![false, false, false, false, false, false, false, false, true]
+            .try_into_u8()
+            .is_err()
+    );
+}
