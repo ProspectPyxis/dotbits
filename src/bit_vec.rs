@@ -31,16 +31,16 @@ pub trait BitVec {
     ///
     /// # Errors
     ///
-    /// Will return `Err(Error::PosOutOfBounds)` if the vector is smaller than the index, e.g. `pos
-    /// >= self.len()`.
+    /// Will return `Err(Error::PosOutOfBounds)` if the index is out of bounds, e.g. `pos >=
+    /// self.len()`.
     fn set(&mut self, pos: usize, val: bool) -> Result<&mut Self, Error>;
 
     /// Equivalent to `set(&mut self, pos: usize, true)`.
     ///
     /// # Errors
     ///
-    /// Will return `Err(Error::PosOutOfBounds)` if the vector is smaller than the index, e.g. `pos
-    /// >= self.len()`.
+    /// Will return `Err(Error::PosOutOfBounds)` if the index is out of bounds, e.g. `pos >=
+    /// self.len()`.
     #[inline]
     fn set_on(&mut self, pos: usize) -> Result<&mut Self, Error> {
         self.set(pos, true)
@@ -50,8 +50,8 @@ pub trait BitVec {
     ///
     /// # Errors
     ///
-    /// Will return `Err(Error::PosOutOfBounds)` if the vector is smaller than the index, e.g. `pos
-    /// >= self.len()`.
+    /// Will return `Err(Error::PosOutOfBounds)` if the index is out of bounds, e.g. `pos >=
+    /// self.len()`.
     #[inline]
     fn set_off(&mut self, pos: usize) -> Result<&mut Self, Error> {
         self.set(pos, false)
