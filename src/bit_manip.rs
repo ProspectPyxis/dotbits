@@ -38,6 +38,16 @@ macro_rules! bitmanip_impl {
 
                 Ok(self)
             }
+
+            #[inline]
+            fn bit_rev(&mut self) -> &mut Self {
+                let original = *self;
+                for (i, j) in (0..Self::bit_len()).rev().zip(0..Self::bit_len()) {
+                    self.bit_set(i, original.bit_get(j).unwrap()).expect("should never fail");
+                }
+
+                self
+            }
         }
     )*}
 }
@@ -45,9 +55,6 @@ macro_rules! bitmanip_impl {
 /// A trait that provides methods for simple bit manipulation.
 pub trait BitManip {
     /// Converts the implementor type into a `Vec<bool>`.
-    ///
-    /// The resulting vector is formatted in little-endian (least significant bit first). To get a
-    /// vector in big-endian, `reverse()` the resulting vector.
     fn bits(&self) -> Vec<bool>;
 
     /// Gets the length of the implementor type in bits.
@@ -90,6 +97,9 @@ pub trait BitManip {
     fn bit_off(&mut self, pos: usize) -> Result<&mut Self, Error> {
         self.bit_set(pos, false)
     }
+
+    /// Reverses all the bits of the implementor type in place.
+    fn bit_rev(&mut self) -> &mut Self;
 }
 
 bitmanip_impl!(u8, u16, u32, u64, u128, usize);
