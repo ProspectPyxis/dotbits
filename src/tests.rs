@@ -105,4 +105,10 @@ fn bit_vec_try_into_unequal_bits() {
             .expect("conversion failed"),
         0b00001111u8
     );
+    assert_eq!(
+        vec![false, true, false, true]
+            .try_into_u8()
+            .expect("conversion failed"),
+        0b1010u8
+    );
 }
