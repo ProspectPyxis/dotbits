@@ -1,3 +1,5 @@
+use crate::Error;
+
 /// A trait that provides methods for simple bit manipulation.
 pub trait BitManip {
     /// Converts the implementor type into a `Vec<bool>`.
@@ -11,10 +13,11 @@ pub trait BitManip {
 
     /// Gets the bit at a specific position.
     ///
-    /// # Panics
+    /// # Errors
     ///
-    /// This method will panic if the index is out of bounds, e.g. `pos >= Self::bit_len()`.
-    fn bit_get(&self, pos: usize) -> bool;
+    /// Will return `Err(Error::PosOutOfBounds)` if the index is out of bounds, e.g. `pos >=
+    /// Self::bit_len()`.
+    fn bit_get(&self, pos: usize) -> Result<bool, Error>;
 
     /// Sets the bit at a specific position.
     ///
@@ -52,7 +55,7 @@ macro_rules! bitmanip_impl {
                 let mut v: Vec<bool> = Vec::new();
 
                 for i in 0..Self::bit_len() {
-                    v.push(self.bit_get(i));
+                    v.push(self.bit_get(i).unwrap());
                 }
 
                 v
@@ -64,10 +67,12 @@ macro_rules! bitmanip_impl {
             }
 
             #[inline]
-            fn bit_get(&self, pos: usize) -> bool {
-                assert!(pos < Self::bit_len());
+            fn bit_get(&self, pos: usize) -> Result<bool, Error> {
+                if pos >= Self::bit_len() {
+                    return Err(Error::PosOutOfBounds);
+                }
 
-                *self & (1 << pos) != 0
+                Ok(self & (1 << pos) != 0)
             }
 
             #[inline]

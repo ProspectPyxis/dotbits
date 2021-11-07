@@ -13,7 +13,7 @@ pub enum Error {
 impl Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Error::ConversionOverflow => write!(f, "converted value overflows"),
+            Error::ConversionOverflow => write!(f, "converted value overflows type"),
             Error::PosOutOfBounds => write!(f, "position out of bounds"),
         }
     }
