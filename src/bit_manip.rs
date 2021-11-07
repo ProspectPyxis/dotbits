@@ -46,8 +46,8 @@ macro_rules! bitmanip_impl {
 pub trait BitManip {
     /// Converts the implementor type into a `Vec<bool>`.
     ///
-    /// The resulting vector is formatted in little-endian. To get the vector in big-endian,
-    /// `reverse()` the vector.
+    /// The resulting vector is formatted in little-endian (least significant bit first). To get a
+    /// vector in big-endian, `reverse()` the resulting vector.
     fn bits(&self) -> Vec<bool>;
 
     /// Gets the length of the implementor type in bits.
@@ -63,16 +63,18 @@ pub trait BitManip {
 
     /// Sets the bit at a specific position.
     ///
-    /// # Panics
+    /// # Errors
     ///
-    /// This method will panic if the index is out of bounds, e.g. `pos >= Self::bit_len()`.
+    /// Will return `Err(Error::PosOutOfBounds)` if the index is out of bounds, e.g. `pos >=
+    /// Self::bit_len()`.
     fn bit_set(&mut self, pos: usize, val: bool) -> Result<&mut Self, Error>;
 
     /// Equivalent to `bit_set(&mut self, pos: usize, true)`.
     ///
-    /// # Panics
+    /// # Errors
     ///
-    /// This method will panic if the index is out of bounds, e.g. `pos >= Self::bit_len()`.
+    /// Will return `Err(Error::PosOutOfBounds)` if the index is out of bounds, e.g. `pos >=
+    /// Self::bit_len()`.
     #[inline]
     fn bit_on(&mut self, pos: usize) -> Result<&mut Self, Error> {
         self.bit_set(pos, true)
@@ -80,9 +82,10 @@ pub trait BitManip {
 
     /// Equivalent to `bit_set(&mut self, pos: usize, false)`.
     ///
-    /// # Panics
+    /// # Errors
     ///
-    /// This method will panic if the index is out of bounds, e.g. `pos >= Self::bit_len()`.
+    /// Will return `Err(Error::PosOutOfBounds)` if the index is out of bounds, e.g. `pos >=
+    /// Self::bit_len()`.
     #[inline]
     fn bit_off(&mut self, pos: usize) -> Result<&mut Self, Error> {
         self.bit_set(pos, false)
