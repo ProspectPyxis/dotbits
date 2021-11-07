@@ -9,3 +9,6 @@ mod error;
 pub use crate::bit_manip::BitManip;
 pub use crate::bit_vec::BitVec;
 pub use crate::error::Error;
+
+#[cfg(test)]
+mod tests;
