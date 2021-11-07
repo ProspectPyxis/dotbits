@@ -60,9 +60,6 @@ pub trait BitVec {
     /// Attempt to convert the vector into a `u8`. The vector does not have to be the exact size of
     /// the type to convert successfully.
     ///
-    /// This method assumes the vector is in little-endian (least significant bit first). To
-    /// convert a big-endian vector, `reverse()` it first.
-    ///
     /// # Errors
     ///
     /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
@@ -71,9 +68,6 @@ pub trait BitVec {
 
     /// Attempt to convert the vector into a `u16`. The vector does not have to be the exact size of
     /// the type to convert successfully.
-    ///
-    /// This method assumes the vector is in little-endian (least significant bit first). To
-    /// convert a big-endian vector, `reverse()` it first.
     ///
     /// # Errors
     ///
@@ -84,9 +78,6 @@ pub trait BitVec {
     /// Attempt to convert the vector into a `u32`. The vector does not have to be the exact size of
     /// the type to convert successfully.
     ///
-    /// This method assumes the vector is in little-endian (least significant bit first). To
-    /// convert a big-endian vector, `reverse()` it first.
-    ///
     /// # Errors
     ///
     /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
@@ -95,9 +86,6 @@ pub trait BitVec {
 
     /// Attempt to convert the vector into a `u64`. The vector does not have to be the exact size of
     /// the type to convert successfully.
-    ///
-    /// This method assumes the vector is in little-endian (least significant bit first). To
-    /// convert a big-endian vector, `reverse()` it first.
     ///
     /// # Errors
     ///
@@ -108,9 +96,6 @@ pub trait BitVec {
     /// Attempt to convert the vector into a `u128`. The vector does not have to be the exact size of
     /// the type to convert successfully.
     ///
-    /// This method assumes the vector is in little-endian (least significant bit first). To
-    /// convert a big-endian vector, `reverse()` it first.
-    ///
     /// # Errors
     ///
     /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
@@ -119,9 +104,6 @@ pub trait BitVec {
 
     /// Attempt to convert the vector into a `usize`. The vector does not have to be the exact size of
     /// the type to convert successfully.
-    ///
-    /// This method assumes the vector is in little-endian (least significant bit first). To
-    /// convert a big-endian vector, `reverse()` it first.
     ///
     /// # Errors
     ///

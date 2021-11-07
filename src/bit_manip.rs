@@ -99,6 +99,9 @@ pub trait BitManip {
     }
 
     /// Reverses all the bits of the implementor type in place.
+    ///
+    /// Note that this method does not ignore trailing zeroes in the value's bit representation -
+    /// for example, `0b1100u8.bit_rev()` would be equal to `0b00110000u8`, not `0b00000011u8`.
     fn bit_rev(&mut self) -> &mut Self;
 }
 
