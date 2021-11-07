@@ -1,4 +1,16 @@
 //! Utilities for convenient bit manipulation.
+//!
+//! ## Endianness
+//!
+//! Unless stated otherwise, all default implementations assume little-endianness (least
+//! significant bit first). For example, position 0 of the value `0b00001111u8` would be equal to
+//! `1`/`true`, not `0`/`false`. If big-endianness is desired, you must reverse the value first.
+//!
+//! With a `Vec<bool>`, you can use the built-in
+//! [`Vec.reverse()`](https://doc.rust-lang.org/std/vec/struct.Vec.html#method.reverse) function.
+//! With primitive integer types, the [`BitManip`] default implementations has a
+//! [`bit_rev()`](BitManip::bit_rev()) method, which will reverse all the bits of the value in
+//! place.
 
 #![warn(missing_docs)]
 
