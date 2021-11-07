@@ -58,8 +58,7 @@ pub trait BitManip {
     /// # Errors
     ///
     /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
-    /// bounds. In default implementations, this means that `pos` is larger than or equal to
-    /// [`Self::bit_len()`].
+    /// bounds, e.g: `pos >= Self::bit_len()`.
     fn bit_get(&self, pos: usize) -> Result<bool, Error>;
 
     /// Sets the bit at a specific position.
@@ -67,8 +66,7 @@ pub trait BitManip {
     /// # Errors
     ///
     /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
-    /// bounds. In default implementations, this means that `pos` is larger than or equal to
-    /// [`Self::bit_len()`].
+    /// bounds, e.g: `pos >= Self::bit_len()`.
     fn bit_set(&mut self, pos: usize, val: bool) -> Result<&mut Self, Error>;
 
     /// Equivalent to `bit_set(&mut self, pos: usize, true)`.
@@ -76,8 +74,7 @@ pub trait BitManip {
     /// # Errors
     ///
     /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
-    /// bounds. In default implementations, this means that `pos` is larger than or equal to
-    /// [`Self::bit_len()`].
+    /// bounds, e.g: `pos >= Self::bit_len()`.
     #[inline]
     fn bit_on(&mut self, pos: usize) -> Result<&mut Self, Error> {
         self.bit_set(pos, true)
@@ -88,8 +85,7 @@ pub trait BitManip {
     /// # Errors
     ///
     /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
-    /// bounds. In default implementations, this means that `pos` is larger than or equal to
-    /// [`Self::bit_len()`].
+    /// bounds, e.g: `pos >= Self::bit_len()`.
     #[inline]
     fn bit_off(&mut self, pos: usize) -> Result<&mut Self, Error> {
         self.bit_set(pos, false)

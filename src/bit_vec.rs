@@ -31,16 +31,16 @@ pub trait BitVec {
     ///
     /// # Errors
     ///
-    /// Will return `Err(Error::PosOutOfBounds)` if the index is out of bounds, e.g. `pos >=
-    /// self.len()`.
+    /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
+    /// bounds, e.g. `pos >= Self.len()`.
     fn set(&mut self, pos: usize, val: bool) -> Result<&mut Self, Error>;
 
     /// Equivalent to `set(&mut self, pos: usize, true)`.
     ///
     /// # Errors
     ///
-    /// Will return `Err(Error::PosOutOfBounds)` if the index is out of bounds, e.g. `pos >=
-    /// self.len()`.
+    /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
+    /// bounds, e.g. `pos >= Self.len()`.
     #[inline]
     fn set_on(&mut self, pos: usize) -> Result<&mut Self, Error> {
         self.set(pos, true)
@@ -50,65 +50,83 @@ pub trait BitVec {
     ///
     /// # Errors
     ///
-    /// Will return `Err(Error::PosOutOfBounds)` if the index is out of bounds, e.g. `pos >=
-    /// self.len()`.
+    /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
+    /// bounds, e.g. `pos >= Self.len()`.
     #[inline]
     fn set_off(&mut self, pos: usize) -> Result<&mut Self, Error> {
         self.set(pos, false)
     }
 
-    /// Attempts to convert into a `u8`. The vector does not have to be the exact size to convert
-    /// successfully.
+    /// Attempt to convert the vector into a `u8`. The vector does not have to be the exact size of
+    /// the type to convert successfully.
+    ///
+    /// This method assumes the vector is in little-endian (least significant bit first). To
+    /// convert a big-endian vector, `reverse()` it first.
     ///
     /// # Errors
     ///
-    /// Will return `Err(Error::ConversionOverflow)` if the resulting value would overflow the
-    /// type.
+    /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
+    /// would overflow the type.
     fn try_into_u8(&self) -> Result<u8, Error>;
 
-    /// Attempts to convert into a `u16`. The vector does not have to be the exact size to convert
-    /// successfully.
+    /// Attempt to convert the vector into a `u16`. The vector does not have to be the exact size of
+    /// the type to convert successfully.
+    ///
+    /// This method assumes the vector is in little-endian (least significant bit first). To
+    /// convert a big-endian vector, `reverse()` it first.
     ///
     /// # Errors
     ///
-    /// Will return `Err(Error::ConversionOverflow)` if the resulting value would overflow the
-    /// type.
+    /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
+    /// would overflow the type.
     fn try_into_u16(&self) -> Result<u16, Error>;
 
-    /// Attempts to convert into a `u32`. The vector does not have to be the exact size to convert
-    /// successfully.
+    /// Attempt to convert the vector into a `u32`. The vector does not have to be the exact size of
+    /// the type to convert successfully.
+    ///
+    /// This method assumes the vector is in little-endian (least significant bit first). To
+    /// convert a big-endian vector, `reverse()` it first.
     ///
     /// # Errors
     ///
-    /// Will return `Err(Error::ConversionOverflow)` if the resulting value would overflow the
-    /// type.
+    /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
+    /// would overflow the type.
     fn try_into_u32(&self) -> Result<u32, Error>;
 
-    /// Attempts to convert into a `u64`. The vector does not have to be the exact size to convert
-    /// successfully.
+    /// Attempt to convert the vector into a `u64`. The vector does not have to be the exact size of
+    /// the type to convert successfully.
+    ///
+    /// This method assumes the vector is in little-endian (least significant bit first). To
+    /// convert a big-endian vector, `reverse()` it first.
     ///
     /// # Errors
     ///
-    /// Will return `Err(Error::ConversionOverflow)` if the resulting value would overflow the
-    /// type.
+    /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
+    /// would overflow the type.
     fn try_into_u64(&self) -> Result<u64, Error>;
 
-    /// Attempts to convert into a `u128`. The vector does not have to be the exact size to convert
-    /// successfully.
+    /// Attempt to convert the vector into a `u128`. The vector does not have to be the exact size of
+    /// the type to convert successfully.
+    ///
+    /// This method assumes the vector is in little-endian (least significant bit first). To
+    /// convert a big-endian vector, `reverse()` it first.
     ///
     /// # Errors
     ///
-    /// Will return `Err(Error::ConversionOverflow)` if the resulting value would overflow the
-    /// type.
+    /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
+    /// would overflow the type.
     fn try_into_u128(&self) -> Result<u128, Error>;
 
-    /// Attempts to convert into a `usize`. The vector does not have to be the exact size to convert
-    /// successfully.
+    /// Attempt to convert the vector into a `usize`. The vector does not have to be the exact size of
+    /// the type to convert successfully.
+    ///
+    /// This method assumes the vector is in little-endian (least significant bit first). To
+    /// convert a big-endian vector, `reverse()` it first.
     ///
     /// # Errors
     ///
-    /// Will return `Err(Error::ConversionOverflow)` if the resulting value would overflow the
-    /// type.
+    /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
+    /// would overflow the type.
     fn try_into_usize(&self) -> Result<usize, Error>;
 }
 
