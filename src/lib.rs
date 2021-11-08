@@ -1,4 +1,5 @@
-//! Utilities for convenient bit manipulation.
+//! Traits that add convenient bit manipulation methods to unsigned integers (`u8`, `u16`, `u32`,
+//! `u64`, `u128`, `usize`) and boolean vectors (`Vec<bool>`).
 //!
 //! ## Endianness
 //!
