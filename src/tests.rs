@@ -9,6 +9,7 @@ fn bit_get() {
 #[test]
 fn bit_get_err() {
     assert!(0u8.bit_get(10).is_err());
+    assert!(0u16.bit_get(16).is_err());
 }
 
 #[test]
@@ -25,6 +26,21 @@ fn bit_set_err() {
     assert!(0u8.bit_set(8, true).is_err());
     assert!(0u8.bit_on(9).is_err());
     assert!(0u8.bit_off(10).is_err());
+}
+
+#[test]
+fn bit_tog() {
+    assert_eq!(*0b00011100u8.bit_tog(3).unwrap(), 0b00010100u8);
+    assert_eq!(
+        *0b11001100u8.bit_tog(2).unwrap().bit_tog(3).unwrap(),
+        0b11000000u8
+    );
+}
+
+#[test]
+fn bit_tog_err() {
+    assert!(0u8.bit_tog(8).is_err());
+    assert!(0u32.bit_tog(32).is_err());
 }
 
 #[test]

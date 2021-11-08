@@ -40,6 +40,17 @@ macro_rules! bitmanip_impl {
             }
 
             #[inline]
+            fn bit_tog(&mut self, pos: usize) -> Result<&mut Self, Error> {
+                if pos >= Self::bit_len() {
+                    return Err(Error::PosOutOfBounds);
+                }
+
+                *self ^= 1 << pos;
+
+                Ok(self)
+            }
+
+            #[inline]
             fn bit_rev(&mut self) -> &mut Self {
                 let original = *self;
                 for (i, j) in (0..Self::bit_len()).rev().zip(0..Self::bit_len()) {
@@ -97,6 +108,14 @@ pub trait BitManip {
     fn bit_off(&mut self, pos: usize) -> Result<&mut Self, Error> {
         self.bit_set(pos, false)
     }
+
+    /// Toggles the bit at a specific position.
+    ///
+    /// # Errors
+    ///
+    /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
+    /// bounds, e.g: `pos >= Self::bit_len()`.
+    fn bit_tog(&mut self, pos: usize) -> Result<&mut Self, Error>;
 
     /// Reverses all the bits of the implementor type in place.
     ///
