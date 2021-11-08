@@ -2,6 +2,7 @@ use crate::Error;
 
 macro_rules! bitvec_try_into {
     ($($i:ident = $t:ty),*) => {$(
+        #[inline]
         fn $i(&self) -> Result<$t, Error> {
             if self.iter().skip(<$t>::BITS as usize).any(|&x| x) {
                 return Err(Error::PosOutOfBounds);
@@ -56,6 +57,14 @@ pub trait BitVec {
     fn set_off(&mut self, pos: usize) -> Result<&mut Self, Error> {
         self.set(pos, false)
     }
+
+    /// Toggles a particular position in the vector.
+    ///
+    /// # Errors
+    ///
+    /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
+    /// bounds, e.g. `pos >= Self.len()`.
+    fn toggle(&mut self, pos: usize) -> Result<&mut Self, Error>;
 
     /// Attempt to convert the vector into a `u8`. The vector does not have to be the exact size of
     /// the type to convert successfully.
@@ -146,6 +155,16 @@ impl BitVec for Vec<bool> {
         }
 
         self[pos] = val;
+        Ok(self)
+    }
+
+    #[inline]
+    fn toggle(&mut self, pos: usize) -> Result<&mut Self, Error> {
+        if pos >= self.len() {
+            return Err(Error::PosOutOfBounds);
+        }
+
+        self[pos] = !self[pos];
         Ok(self)
     }
 

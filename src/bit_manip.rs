@@ -35,7 +35,6 @@ macro_rules! bitmanip_impl {
                 }
 
                 *self ^= (Self::MIN.wrapping_sub(val.into()) ^ *self) & (1 << pos);
-
                 Ok(self)
             }
 
@@ -46,7 +45,6 @@ macro_rules! bitmanip_impl {
                 }
 
                 *self ^= 1 << pos;
-
                 Ok(self)
             }
 
