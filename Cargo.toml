@@ -1,9 +1,11 @@
 [package]
 name = "dotbits"
 version = "0.1.0"
-description = "unsigned int -> Vec<bool>, plus helper functions"
+description = "unsigned int <-> Vec<bool>, plus helper functions"
 repository = "https://github.com/ProspectPyxis/dotbits"
 license = "MIT OR Apache-2.0"
+keywords = ["bit"]
+categories = ["mathematics", "encoding"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
