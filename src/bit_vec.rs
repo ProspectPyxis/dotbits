@@ -58,6 +58,9 @@ pub trait BitVec {
         self.set(pos, false)
     }
 
+    /// Trims any trailing `false` values from the vector.
+    fn trim(&mut self) -> &mut Self;
+
     /// Toggles a particular position in the vector.
     ///
     /// # Errors
@@ -166,6 +169,18 @@ impl BitVec for Vec<bool> {
 
         self[pos] = !self[pos];
         Ok(self)
+    }
+
+    #[inline]
+    fn trim(&mut self) -> &mut Self {
+        for i in (0..self.len()).rev() {
+            if *self.get(i).unwrap() {
+                break;
+            }
+            self.pop();
+        }
+
+        self
     }
 
     bitvec_try_into!(
