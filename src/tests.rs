@@ -79,19 +79,10 @@ fn bit_vec_zeroes() {
 
 #[test]
 fn bit_vec_set() {
-    assert_eq!(
-        *0b01010101u8.bits().set(3, true).unwrap(),
-        0b01011101u8.bits()
-    );
-    assert_eq!(
-        *0b11001100u8.bits().set(2, false).unwrap(),
-        0b11001000u8.bits()
-    );
-    assert_eq!(*0b00001111u8.bits().set_on(4).unwrap(), 0b00011111u8.bits());
-    assert_eq!(
-        *0b00001111u8.bits().set_off(3).unwrap(),
-        0b00000111u8.bits()
-    );
+    assert_eq!(*0b01010101u8.bits().set(3, true), 0b01011101u8.bits());
+    assert_eq!(*0b11001100u8.bits().set(2, false), 0b11001000u8.bits());
+    assert_eq!(*0b00001111u8.bits().set_on(4), 0b00011111u8.bits());
+    assert_eq!(*0b00001111u8.bits().set_off(3), 0b00000111u8.bits());
 }
 
 #[test]

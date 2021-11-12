@@ -12,6 +12,18 @@
 //! With primitive integer types, the [`BitManip`] default implementations have a
 //! [`bit_rev()`](BitManip::bit_rev()) method, which will reverse all the bits of the value in
 //! place.
+//!
+//! ## Examples
+//!
+//! Getting the first "on" bit of a number:
+//!
+//! ```
+//! use dotbits::BitManip;
+//! use dotbits::BitVec;
+//!
+//! assert_eq!(*0b10110100u8.bits().ones().first().unwrap(), 2);
+//! assert_eq!(*128u8.bits().ones().first().unwrap(), 7);
+//! ```
 
 #![warn(missing_docs)]
 
