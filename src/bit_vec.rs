@@ -30,31 +30,25 @@ pub trait BitVec {
 
     /// Sets a particular position in the vector to a specific boolean.
     ///
-    /// # Errors
-    ///
-    /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
-    /// bounds, e.g. `pos >= Self.len()`.
-    fn set(&mut self, pos: usize, val: bool) -> Result<&mut Self, Error>;
+    /// If the index would be out of bounds, the vector is resized to the appropriate size before
+    /// the operation is performed.
+    fn set(&mut self, pos: usize, val: bool) -> &mut Self;
 
     /// Equivalent to `set(&mut self, pos: usize, true)`.
     ///
-    /// # Errors
-    ///
-    /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
-    /// bounds, e.g. `pos >= Self.len()`.
+    /// If the index would be out of bounds, the vector is resized to the appropriate size before
+    /// the operation is performed.
     #[inline]
-    fn set_on(&mut self, pos: usize) -> Result<&mut Self, Error> {
+    fn set_on(&mut self, pos: usize) -> &mut Self {
         self.set(pos, true)
     }
 
     /// Equivalent to `set(&mut self, pos: usize, false)`.
     ///
-    /// # Errors
-    ///
-    /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
-    /// bounds, e.g. `pos >= Self.len()`.
+    /// If the index would be out of bounds, the vector is resized to the appropriate size before
+    /// the operation is performed.
     #[inline]
-    fn set_off(&mut self, pos: usize) -> Result<&mut Self, Error> {
+    fn set_off(&mut self, pos: usize) -> &mut Self {
         self.set(pos, false)
     }
 
@@ -63,11 +57,9 @@ pub trait BitVec {
 
     /// Toggles a particular position in the vector.
     ///
-    /// # Errors
-    ///
-    /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
-    /// bounds, e.g. `pos >= Self.len()`.
-    fn toggle(&mut self, pos: usize) -> Result<&mut Self, Error>;
+    /// If the index would be out of bounds, the vector is resized to the appropriate size before
+    /// the operation is performed.
+    fn toggle(&mut self, pos: usize) -> &mut Self;
 
     /// Attempt to convert the vector into a `u8`. The vector does not have to be the exact size of
     /// the type to convert successfully.
@@ -152,23 +144,23 @@ impl BitVec for Vec<bool> {
     }
 
     #[inline]
-    fn set(&mut self, pos: usize, val: bool) -> Result<&mut Self, Error> {
+    fn set(&mut self, pos: usize, val: bool) -> &mut Self {
         if pos >= self.len() {
-            return Err(Error::PosOutOfBounds);
+            self.resize(pos, false);
         }
 
         self[pos] = val;
-        Ok(self)
+        self
     }
 
     #[inline]
-    fn toggle(&mut self, pos: usize) -> Result<&mut Self, Error> {
+    fn toggle(&mut self, pos: usize) -> &mut Self {
         if pos >= self.len() {
-            return Err(Error::PosOutOfBounds);
+            self.resize(pos, false);
         }
 
         self[pos] = !self[pos];
-        Ok(self)
+        self
     }
 
     #[inline]
