@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2021-11-14
+### Added
+- `bit_first_one` and `bit_first_zero` methods to reduce excessive vec creation
+
 ## [0.1.1] - 2021-11-14
 ### Added
 - `bit_ones` and `bit_zeroes` methods to shortcut getting on/off bits of a number
