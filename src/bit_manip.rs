@@ -41,13 +41,13 @@ macro_rules! bitmanip_impl {
             }
 
             #[inline]
-            fn signed_left_shift(&self, rhs: isize) -> Self {
-                if rhs < 0 { self >> rhs.abs() } else { self << rhs }
+            fn signed_left_shift(&self, rhs: i32) -> Self {
+                if rhs.is_negative() { self >> rhs.abs() } else { self << rhs }
             }
 
             #[inline]
-            fn signed_right_shift(&self, rhs: isize) -> Self {
-                if rhs < 0 { self << rhs.abs() } else { self >> rhs }
+            fn signed_right_shift(&self, rhs: i32) -> Self {
+                if rhs.is_negative() { self << rhs.abs() } else { self >> rhs }
             }
 
             #[inline]
@@ -116,10 +116,10 @@ pub trait BitManip {
     fn bit_len() -> usize;
 
     /// Computes `self << rhs` if `rhs` is positive, or `self >> rhs` if `rhs` is negative.
-    fn signed_left_shift(&self, rhs: isize) -> Self;
+    fn signed_left_shift(&self, rhs: i32) -> Self;
 
     /// Computes `self >> rhs` if `rhs` is positive, or `self << rhs` if `rhs` is negative.
-    fn signed_right_shift(&self, rhs: isize) -> Self;
+    fn signed_right_shift(&self, rhs: i32) -> Self;
 
     /// Gets the bit at a specific position.
     ///

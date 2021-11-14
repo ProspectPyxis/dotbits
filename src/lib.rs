@@ -15,7 +15,7 @@
 //!
 //! ## Examples
 //!
-//! Getting the first "on" bit of a number:
+//! Getting the first "on" bit of a number (roughly equivalent to `number.trailing_zeroes()`):
 //!
 //! ```
 //! use dotbits::BitManip;
@@ -28,11 +28,17 @@
 //!
 //! assert_eq!(*0b10110100u8.bit_ones().first().unwrap(), 2);
 //! assert_eq!(*128u8.bit_ones().first().unwrap(), 7);
+//! ```
 //!
-//! // Or simply use .bit_first_one():
+//! Bit shifts using negative numbers:
 //!
-//! assert_eq!(0b10110100u8.bit_first_one().unwrap(), 2);
-//! assert_eq!(128u8.bit_first_one().unwrap(), 7);
+//! ```
+//! use dotbits::BitManip;
+//!
+//! assert_eq!(24u32.signed_left_shift(2), 24u32 << 2);
+//! assert_eq!(24u32.signed_left_shift(-2), 24u32 >> 2);
+//! assert_eq!(24u32.signed_right_shift(2), 24u32 >> 2);
+//! assert_eq!(24u32.signed_right_shift(-2), 24u32 << 2);
 //! ```
 
 #![warn(missing_docs)]
