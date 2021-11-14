@@ -41,25 +41,13 @@ macro_rules! bitmanip_impl {
             }
 
             #[inline]
-            fn bit_first_one(&self) -> Option<usize> {
-                for i in 0..Self::bit_len() {
-                    if self.bit_get(i).unwrap() {
-                        return Some(i);
-                    }
-                }
-
-                None
+            fn signed_left_shift(&self, rhs: isize) -> Self {
+                if rhs < 0 { self >> rhs.abs() } else { self << rhs }
             }
 
             #[inline]
-            fn bit_first_zero(&self) -> Option<usize> {
-                for i in 0..Self::bit_len() {
-                    if !self.bit_get(i).unwrap() {
-                        return Some(i);
-                    }
-                }
-
-                None
+            fn signed_right_shift(&self, rhs: isize) -> Self {
+                if rhs < 0 { self << rhs.abs() } else { self >> rhs }
             }
 
             #[inline]
@@ -124,16 +112,14 @@ pub trait BitManip {
     /// avoids needing to create two vectors and is thus faster.
     fn bit_zeroes(&self) -> Vec<usize>;
 
-    /// Returns the position of the first "on" bit in the number, or `None` if no bits are on.
-    /// Equivalent to `Self.bits().ones().first()`.
-    fn bit_first_one(&self) -> Option<usize>;
-
-    /// Returns the position of the first "off" bit in the number, or `None` if no bits are on.
-    /// Equivalent to `Self.bits().zeroes().first()`.
-    fn bit_first_zero(&self) -> Option<usize>;
-
     /// Gets the length of the implementor type in bits.
     fn bit_len() -> usize;
+
+    /// Computes `self << rhs` if `rhs` is positive, or `self >> rhs` if `rhs` is negative.
+    fn signed_left_shift(&self, rhs: isize) -> Self;
+
+    /// Computes `self >> rhs` if `rhs` is positive, or `self << rhs` if `rhs` is negative.
+    fn signed_right_shift(&self, rhs: isize) -> Self;
 
     /// Gets the bit at a specific position.
     ///
