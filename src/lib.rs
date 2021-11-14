@@ -23,6 +23,11 @@
 //!
 //! assert_eq!(*0b10110100u8.bits().ones().first().unwrap(), 2);
 //! assert_eq!(*128u8.bits().ones().first().unwrap(), 7);
+//!
+//! // Or alternatively, using .bit_ones():
+//!
+//! assert_eq!(*0b10110100u8.bit_ones().first().unwrap(), 2);
+//! assert_eq!(*128u8.bit_ones().first().unwrap(), 7);
 //! ```
 
 #![warn(missing_docs)]
