@@ -15,6 +15,32 @@ macro_rules! bitmanip_impl {
             }
 
             #[inline]
+            fn bit_ones(&self) -> Vec<usize> {
+                let mut v: Vec<usize> = Vec::new();
+
+                for i in 0..Self::bit_len() {
+                    if self.bit_get(i).unwrap() {
+                        v.push(i);
+                    }
+                }
+
+                v
+            }
+
+            #[inline]
+            fn bit_zeroes(&self) -> Vec<usize> {
+                let mut v: Vec<usize> = Vec::new();
+
+                for i in 0..Self::bit_len() {
+                    if !self.bit_get(i).unwrap() {
+                        v.push(i);
+                    }
+                }
+
+                v
+            }
+
+            #[inline]
             fn bit_len() -> usize {
                 Self::BITS as usize
             }
@@ -65,6 +91,16 @@ macro_rules! bitmanip_impl {
 pub trait BitManip {
     /// Converts the implementor type into a `Vec<bool>`.
     fn bits(&self) -> Vec<bool>;
+
+    /// Returns a vector of every "on" position in the number. Functionally equivalent to
+    /// `Self.bits().ones()` - it's recommended to use this over function chaining, as this avoids
+    /// needing to create two vectors and is thus faster.
+    fn bit_ones(&self) -> Vec<usize>;
+
+    /// Returns a vector of every "off" position in the number. Functionally equivalent to
+    /// `Self.bits().zeroes()` - it's recommended to use this over function chaining, as this
+    /// avoids needing to create two vectors and is thus faster.
+    fn bit_zeroes(&self) -> Vec<usize>;
 
     /// Gets the length of the implementor type in bits.
     fn bit_len() -> usize;

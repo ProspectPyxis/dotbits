@@ -1,6 +1,6 @@
 [package]
 name = "dotbits"
-version = "0.1.0"
+version = "0.1.1"
 description = "unsigned int <-> Vec<bool>, plus helper functions"
 readme = "README.md"
 repository = "https://github.com/ProspectPyxis/dotbits"
