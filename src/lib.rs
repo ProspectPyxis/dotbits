@@ -10,7 +10,7 @@
 //! With a `Vec<bool>`, you can use the built-in
 //! [`Vec.reverse()`](https://doc.rust-lang.org/std/vec/struct.Vec.html#method.reverse) function if
 //! you're not running in a `no_std` environment. With primitive integer types, use the built-in
-//! `reverse_bits()` function.
+//! `reverse_bits()` function that exists for every primitive integer.
 //!
 //! ## Examples
 //!

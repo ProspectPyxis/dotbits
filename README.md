@@ -17,14 +17,14 @@ dotbits = "0.3"
 
 ## Examples
 
-Getting the first "on" bit in a `u8`:
+Bit shifts using negative numbers:
 
 ```rust
 use dotbits::BitManip;
-use dotbits::BitVec;
-
-assert_eq!(*0b10110100u8.bits().ones().first().unwrap(), 2);
-assert_eq!(*128u8.bits().ones().first().unwrap(), 7);
+assert_eq!(24u32.signed_left_shift(2), 24u32 << 2);
+assert_eq!(24u32.signed_left_shift(-2), 24u32 >> 2);
+assert_eq!(24u32.signed_right_shift(2), 24u32 >> 2);
+assert_eq!(24u32.signed_right_shift(-2), 24u32 << 2);
 ```
 
 ## License
