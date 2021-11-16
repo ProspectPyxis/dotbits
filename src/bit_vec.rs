@@ -1,13 +1,7 @@
-use crate::Error;
-
 macro_rules! bitvec_try_into {
     ($($i:ident = $t:ty),*) => {$(
         #[inline]
-        fn $i(&self) -> Result<$t, Error> {
-            if self.iter().skip(<$t>::BITS as usize).any(|&x| x) {
-                return Err(Error::PosOutOfBounds);
-            }
-
+        fn $i(&self) -> $t {
             let mut v: $t = 0;
             for (i, b) in self.iter().enumerate() {
                 if *b {
@@ -15,7 +9,7 @@ macro_rules! bitvec_try_into {
                 }
             }
 
-            Ok(v)
+            v
         }
     )*}
 }
@@ -68,7 +62,7 @@ pub trait BitVec {
     ///
     /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
     /// would overflow the type.
-    fn try_into_u8(&self) -> Result<u8, Error>;
+    fn try_into_u8(&self) -> u8;
 
     /// Attempt to convert the vector into a `u16`. The vector does not have to be the exact size of
     /// the type to convert successfully.
@@ -77,7 +71,7 @@ pub trait BitVec {
     ///
     /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
     /// would overflow the type.
-    fn try_into_u16(&self) -> Result<u16, Error>;
+    fn try_into_u16(&self) -> u16;
 
     /// Attempt to convert the vector into a `u32`. The vector does not have to be the exact size of
     /// the type to convert successfully.
@@ -86,7 +80,7 @@ pub trait BitVec {
     ///
     /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
     /// would overflow the type.
-    fn try_into_u32(&self) -> Result<u32, Error>;
+    fn try_into_u32(&self) -> u32;
 
     /// Attempt to convert the vector into a `u64`. The vector does not have to be the exact size of
     /// the type to convert successfully.
@@ -95,7 +89,7 @@ pub trait BitVec {
     ///
     /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
     /// would overflow the type.
-    fn try_into_u64(&self) -> Result<u64, Error>;
+    fn try_into_u64(&self) -> u64;
 
     /// Attempt to convert the vector into a `u128`. The vector does not have to be the exact size of
     /// the type to convert successfully.
@@ -104,7 +98,7 @@ pub trait BitVec {
     ///
     /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
     /// would overflow the type.
-    fn try_into_u128(&self) -> Result<u128, Error>;
+    fn try_into_u128(&self) -> u128;
 
     /// Attempt to convert the vector into a `usize`. The vector does not have to be the exact size of
     /// the type to convert successfully.
@@ -113,7 +107,7 @@ pub trait BitVec {
     ///
     /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
     /// would overflow the type.
-    fn try_into_usize(&self) -> Result<usize, Error>;
+    fn try_into_usize(&self) -> usize;
 }
 
 impl BitVec for Vec<bool> {
