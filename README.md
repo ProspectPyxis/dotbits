@@ -4,13 +4,15 @@
 
 dotbits is a rust library that simplifies bit manipulation. Its primary feature is the `.bits()` function, which converts any unsigned integer type (`u8`, `u16`, `u32`, `u64`, `u128`, `usize`) into a `Vec<bool>`. It also adds certain helper functions over `Vec<bool>`.
 
+**WARNING:** This crate is currently in the fast iteration phase, and **should not be considered stable.** Certain methods may get added or removed very quickly - use this crate at your own risk!
+
 ## Usage
 
 Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-dotbits = "0.1"
+dotbits = "0.3"
 ```
 
 ## Examples
