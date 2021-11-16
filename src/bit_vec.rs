@@ -85,28 +85,20 @@ pub trait BitVec {
 impl BitVec for Vec<bool> {
     #[inline]
     fn ones(&self) -> Vec<usize> {
-        let mut v: Vec<usize> = Vec::new();
-
-        for (i, b) in self.iter().enumerate() {
-            if *b {
-                v.push(i);
-            }
-        }
-
-        v
+        self.iter()
+            .enumerate()
+            .filter(|(_, &x)| x)
+            .map(|(i, _)| i)
+            .collect()
     }
 
     #[inline]
     fn zeroes(&self) -> Vec<usize> {
-        let mut v: Vec<usize> = Vec::new();
-
-        for (i, b) in self.iter().enumerate() {
-            if !*b {
-                v.push(i);
-            }
-        }
-
-        v
+        self.iter()
+            .enumerate()
+            .filter(|(_, &x)| !x)
+            .map(|(i, _)| i)
+            .collect()
     }
 
     #[inline]
