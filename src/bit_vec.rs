@@ -4,14 +4,7 @@ macro_rules! bitvec_into {
     ($($i:ident = $t:ty),*) => {$(
         #[inline]
         fn $i(self) -> $t {
-            let mut v: $t = 0;
-            for (i, b) in self.iter().enumerate() {
-                if *b {
-                    v |= 1 << i;
-                }
-            }
-
-            v
+            self.iter().enumerate().fold(0, |acc, (i, &x)| acc | (<$t>::from(x) << i))
         }
     )*}
 }
