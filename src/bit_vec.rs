@@ -111,10 +111,7 @@ impl BitVec for Vec<bool> {
 
     #[inline]
     fn trim(&mut self) -> &mut Self {
-        for i in (0..self.len()).rev() {
-            if *self.get(i).unwrap() {
-                break;
-            }
+        while !*self.last().unwrap_or(&true) {
             self.pop();
         }
 
