@@ -45,11 +45,6 @@ fn bit_vec_into() {
 
 #[test]
 fn bit_vec_into_unequal_bits() {
-    assert_eq!(128u32.bits().into_u8(), 128u8);
-    assert_eq!(
-        vec![true, true, true, true, false, false, false, false, false, false].into_u8(),
-        0b00001111u8
-    );
     assert_eq!(vec![false, true, false, true].into_u8(), 0b1010u8);
 }
 
