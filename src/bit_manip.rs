@@ -5,19 +5,19 @@ macro_rules! bitmanip_impl {
             fn bits(&self) -> Vec<bool> {
                 let mut v: Vec<bool> = Vec::new();
 
-                for i in 0..Self::bit_len() {
-                    v.push(self.bit_get(i));
+                for i in 0..Self::BITS {
+                    v.push(self & 1 << i != 0);
                 }
 
                 v
             }
 
             #[inline]
-            fn bit_ones(&self) -> Vec<usize> {
-                let mut v: Vec<usize> = Vec::new();
+            fn bit_ones(&self) -> Vec<u32> {
+                let mut v: Vec<u32> = Vec::new();
 
-                for i in 0..Self::bit_len() {
-                    if self.bit_get(i) {
+                for i in 0..Self::BITS {
+                    if self & 1 << i != 0 {
                         v.push(i);
                     }
                 }
@@ -26,11 +26,11 @@ macro_rules! bitmanip_impl {
             }
 
             #[inline]
-            fn bit_zeroes(&self) -> Vec<usize> {
-                let mut v: Vec<usize> = Vec::new();
+            fn bit_zeroes(&self) -> Vec<u32> {
+                let mut v: Vec<u32> = Vec::new();
 
-                for i in 0..Self::bit_len() {
-                    if !self.bit_get(i) {
+                for i in 0..Self::BITS {
+                    if self & 1 << i == 0 {
                         v.push(i);
                     }
                 }
@@ -47,38 +47,6 @@ macro_rules! bitmanip_impl {
             fn signed_right_shift(&self, rhs: i32) -> Self {
                 if rhs.is_negative() { self << rhs.abs() } else { self >> rhs }
             }
-
-            #[inline]
-            fn bit_len() -> usize {
-                Self::BITS as usize
-            }
-
-            #[inline]
-            fn bit_get(&self, pos: usize) -> bool {
-                self & (1 << pos) != 0
-            }
-
-            #[inline]
-            fn bit_set(&mut self, pos: usize, val: bool) -> &mut Self {
-                *self ^= (Self::MIN.wrapping_sub(val.into()) ^ *self) & (1 << pos);
-                self
-            }
-
-            #[inline]
-            fn bit_tog(&mut self, pos: usize) -> &mut Self {
-                *self ^= 1 << pos;
-                self
-            }
-
-            #[inline]
-            fn bit_rev(&mut self) -> &mut Self {
-                let original = *self;
-                for (i, j) in (0..Self::bit_len()).rev().zip(0..Self::bit_len()) {
-                    self.bit_set(i, original.bit_get(j));
-                }
-
-                self
-            }
         }
     )*}
 }
@@ -91,73 +59,18 @@ pub trait BitManip {
     /// Returns a vector of every "on" position in the number. Functionally equivalent to
     /// `Self.bits().ones()` - it's recommended to use this over function chaining, as this avoids
     /// needing to create two vectors and is thus faster.
-    fn bit_ones(&self) -> Vec<usize>;
+    fn bit_ones(&self) -> Vec<u32>;
 
     /// Returns a vector of every "off" position in the number. Functionally equivalent to
     /// `Self.bits().zeroes()` - it's recommended to use this over function chaining, as this
     /// avoids needing to create two vectors and is thus faster.
-    fn bit_zeroes(&self) -> Vec<usize>;
-
-    /// Gets the length of the implementor type in bits.
-    fn bit_len() -> usize;
+    fn bit_zeroes(&self) -> Vec<u32>;
 
     /// Computes `self << rhs` if `rhs` is positive, or `self >> rhs` if `rhs` is negative.
     fn signed_left_shift(&self, rhs: i32) -> Self;
 
     /// Computes `self >> rhs` if `rhs` is positive, or `self << rhs` if `rhs` is negative.
     fn signed_right_shift(&self, rhs: i32) -> Self;
-
-    /// Gets the bit at a specific position.
-    ///
-    /// # Errors
-    ///
-    /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
-    /// bounds, e.g: `pos >= Self::bit_len()`.
-    fn bit_get(&self, pos: usize) -> bool;
-
-    /// Sets the bit at a specific position.
-    ///
-    /// # Errors
-    ///
-    /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
-    /// bounds, e.g: `pos >= Self::bit_len()`.
-    fn bit_set(&mut self, pos: usize, val: bool) -> &mut Self;
-
-    /// Equivalent to `bit_set(&mut self, pos: usize, true)`.
-    ///
-    /// # Errors
-    ///
-    /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
-    /// bounds, e.g: `pos >= Self::bit_len()`.
-    #[inline]
-    fn bit_on(&mut self, pos: usize) -> &mut Self {
-        self.bit_set(pos, true)
-    }
-
-    /// Equivalent to `bit_set(&mut self, pos: usize, false)`.
-    ///
-    /// # Errors
-    ///
-    /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
-    /// bounds, e.g: `pos >= Self::bit_len()`.
-    #[inline]
-    fn bit_off(&mut self, pos: usize) -> &mut Self {
-        self.bit_set(pos, false)
-    }
-
-    /// Toggles the bit at a specific position.
-    ///
-    /// # Errors
-    ///
-    /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
-    /// bounds, e.g: `pos >= Self::bit_len()`.
-    fn bit_tog(&mut self, pos: usize) -> &mut Self;
-
-    /// Reverses all the bits of the implementor type in place.
-    ///
-    /// Note that this method does not ignore trailing zeroes in the value's bit representation -
-    /// for example, `0b1100u8.bit_rev()` would be equal to `0b00110000u8`, not `0b00000011u8`.
-    fn bit_rev(&mut self) -> &mut Self;
 }
 
 bitmanip_impl!(u8, u16, u32, u64, u128, usize);
