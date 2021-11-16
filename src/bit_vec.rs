@@ -24,38 +24,8 @@ pub trait BitVec {
     /// Returns a vector of all positions that are `false`.
     fn zeroes(&self) -> Vec<usize>;
 
-    /// Sets a particular position in the vector to a specific boolean.
-    ///
-    /// If the index would be out of bounds, the vector is resized to the appropriate size before
-    /// the operation is performed.
-    fn set(&mut self, pos: usize, val: bool) -> &mut Self;
-
-    /// Equivalent to `set(&mut self, pos: usize, true)`.
-    ///
-    /// If the index would be out of bounds, the vector is resized to the appropriate size before
-    /// the operation is performed.
-    #[inline]
-    fn set_on(&mut self, pos: usize) -> &mut Self {
-        self.set(pos, true)
-    }
-
-    /// Equivalent to `set(&mut self, pos: usize, false)`.
-    ///
-    /// If the index would be out of bounds, the vector is resized to the appropriate size before
-    /// the operation is performed.
-    #[inline]
-    fn set_off(&mut self, pos: usize) -> &mut Self {
-        self.set(pos, false)
-    }
-
     /// Trims any trailing `false` values from the vector.
     fn trim(&mut self) -> &mut Self;
-
-    /// Toggles a particular position in the vector.
-    ///
-    /// If the index would be out of bounds, the vector is resized to the appropriate size before
-    /// the operation is performed.
-    fn toggle(&mut self, pos: usize) -> &mut Self;
 
     /// Attempt to convert the vector into a `u8`. The vector does not have to be the exact size of
     /// the type to convert successfully.
@@ -137,26 +107,6 @@ impl BitVec for Vec<bool> {
         }
 
         v
-    }
-
-    #[inline]
-    fn set(&mut self, pos: usize, val: bool) -> &mut Self {
-        if pos >= self.len() {
-            self.resize(pos, false);
-        }
-
-        self[pos] = val;
-        self
-    }
-
-    #[inline]
-    fn toggle(&mut self, pos: usize) -> &mut Self {
-        if pos >= self.len() {
-            self.resize(pos, false);
-        }
-
-        self[pos] = !self[pos];
-        self
     }
 
     #[inline]
