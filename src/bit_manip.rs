@@ -29,7 +29,7 @@ macro_rules! bitmanip_impl {
             }
 
             #[inline]
-            fn bit_zeroes(&self) -> Vec<u32> {
+            fn bit_zeros(&self) -> Vec<u32> {
                 let mut v: Vec<u32> = Vec::new();
                 let mut looper = *self;
 
@@ -64,7 +64,7 @@ pub trait BitManip {
     fn bit_ones(&self) -> Vec<u32>;
 
     /// Returns a vector of every "off" position in the number.
-    fn bit_zeroes(&self) -> Vec<u32>;
+    fn bit_zeros(&self) -> Vec<u32>;
 
     /// Computes `self << rhs` if `rhs` is positive, or `self >> rhs` if `rhs` is negative.
     fn signed_left_shift(&self, rhs: i32) -> Self;

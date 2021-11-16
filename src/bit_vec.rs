@@ -15,7 +15,7 @@ pub trait BitVec {
     fn ones(&self) -> Vec<usize>;
 
     /// Returns a vector of all positions that are `false`.
-    fn zeroes(&self) -> Vec<usize>;
+    fn zeros(&self) -> Vec<usize>;
 
     /// Trims any trailing `false` values from the vector.
     fn trim(&mut self) -> &mut Self;
@@ -24,7 +24,8 @@ pub trait BitVec {
     ///
     /// # Panics
     ///
-    /// Panics if the vector is larger than `u8::BITS`.
+    /// Panics if the vector is larger than
+    /// [`u8::BITS`](https://doc.rust-lang.org/std/primitive.u8.html#associatedconstant.BITS).
     ///
     /// If you wish to convert the vector while disregarding any excess bits, try calling
     /// `self.truncate(u8::BITS as usize)` first.
@@ -34,7 +35,8 @@ pub trait BitVec {
     ///
     /// # Panics
     ///
-    /// Panics if the vector is larger than `u16::BITS`.
+    /// Panics if the vector is larger than
+    /// [`u16::BITS`](https://doc.rust-lang.org/std/primitive.u16.html#associatedconstant.BITS).
     ///
     /// If you wish to convert the vector while disregarding any excess bits, try calling
     /// `self.truncate(u16::BITS as usize)` first.
@@ -44,7 +46,8 @@ pub trait BitVec {
     ///
     /// # Panics
     ///
-    /// Panics if the vector is larger than `u32::BITS`.
+    /// Panics if the vector is larger than
+    /// [`u32::BITS`](https://doc.rust-lang.org/std/primitive.u32.html#associatedconstant.BITS).
     ///
     /// If you wish to convert the vector while disregarding any excess bits, try calling
     /// `self.truncate(u32::BITS as usize)` first.
@@ -54,7 +57,8 @@ pub trait BitVec {
     ///
     /// # Panics
     ///
-    /// Panics if the vector is larger than `u64::BITS`.
+    /// Panics if the vector is larger than
+    /// [`u64::BITS`](https://doc.rust-lang.org/std/primitive.u64.html#associatedconstant.BITS).
     ///
     /// If you wish to convert the vector while disregarding any excess bits, try calling
     /// `self.truncate(u64::BITS as usize)` first.
@@ -64,7 +68,8 @@ pub trait BitVec {
     ///
     /// # Panics
     ///
-    /// Panics if the vector is larger than `u128::BITS`.
+    /// Panics if the vector is larger than
+    /// [`u128::BITS`](https://doc.rust-lang.org/std/primitive.u128.html#associatedconstant.BITS).
     ///
     /// If you wish to convert the vector while disregarding any excess bits, try calling
     /// `self.truncate(u128::BITS as usize)` first.
@@ -74,7 +79,8 @@ pub trait BitVec {
     ///
     /// # Panics
     ///
-    /// Panics if the vector is larger than `usize::BITS`.
+    /// Panics if the vector is larger than
+    /// [`usize::BITS`](https://doc.rust-lang.org/std/primitive.usize.html#associatedconstant.BITS).
     ///
     /// If you wish to convert the vector while disregarding any excess bits, try calling
     /// `self.truncate(usize::BITS as usize)` first.
@@ -92,7 +98,7 @@ impl BitVec for Vec<bool> {
     }
 
     #[inline]
-    fn zeroes(&self) -> Vec<usize> {
+    fn zeros(&self) -> Vec<usize> {
         self.iter()
             .enumerate()
             .filter(|(_, &x)| !x)

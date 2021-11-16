@@ -8,27 +8,11 @@
 //! `1`/`true`, not `0`/`false`. If big-endianness is desired, you must reverse the value.
 //!
 //! With a `Vec<bool>`, you can use the built-in
-//! [`Vec.reverse()`](https://doc.rust-lang.org/std/vec/struct.Vec.html#method.reverse) function.
-//! With primitive integer types, the [`BitManip`] default implementations have a
-//! [`bit_rev()`](BitManip::bit_rev()) method, which will reverse all the bits of the value in
-//! place.
+//! [`Vec.reverse()`](https://doc.rust-lang.org/std/vec/struct.Vec.html#method.reverse) function if
+//! you're not running in a `no_std` environment. With primitive integer types, use the built-in
+//! `reverse_bits()` function.
 //!
 //! ## Examples
-//!
-//! Getting the first "on" bit of a number (roughly equivalent to `number.trailing_zeroes()`):
-//!
-//! ```
-//! use dotbits::BitManip;
-//! use dotbits::BitVec;
-//!
-//! assert_eq!(*0b10110100u8.bits().ones().first().unwrap(), 2);
-//! assert_eq!(*128u8.bits().ones().first().unwrap(), 7);
-//!
-//! // Or alternatively, using .bit_ones():
-//!
-//! assert_eq!(*0b10110100u8.bit_ones().first().unwrap(), 2);
-//! assert_eq!(*128u8.bit_ones().first().unwrap(), 7);
-//! ```
 //!
 //! Bit shifts using negative numbers:
 //!

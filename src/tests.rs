@@ -22,9 +22,9 @@ fn bit_vec_ones() {
 
 #[test]
 fn bit_vec_zeroes() {
-    assert_eq!(0b11001100u8.bits().zeroes(), vec![0, 1, 4, 5]);
-    assert_eq!(0b01001111u8.bits().zeroes(), vec![4, 5, 7]);
-    assert_eq!(0b00001111u8.bits().zeroes(), vec![4, 5, 6, 7]);
+    assert_eq!(0b11001100u8.bits().zeros(), vec![0, 1, 4, 5]);
+    assert_eq!(0b01001111u8.bits().zeros(), vec![4, 5, 7]);
+    assert_eq!(0b00001111u8.bits().zeros(), vec![4, 5, 6, 7]);
 }
 
 #[test]

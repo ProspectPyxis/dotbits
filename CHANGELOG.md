@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - All methods no longer return `Result` and simply panic on failure
 - All `try_into` methods in `BitVec` has been renamed to `into`, and now consumes the vector to follow conventions
+- All methods with `zeroes` in its name have been changed to `zeros` to follow std conventions
 - Several methods have been optimized and turned into one-liners
 
 ### Removed
