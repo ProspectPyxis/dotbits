@@ -5,7 +5,7 @@ macro_rules! bitmanip_impl {
         impl BitManip for $t {
             #[inline]
             fn bits(&self) -> Vec<bool> {
-                let mut v: Vec<bool> = Vec::new();
+                let mut v: Vec<bool> = Vec::with_capacity(Self::BITS as usize);
 
                 for i in 0..Self::BITS {
                     v.push(self & 1 << i != 0);
@@ -17,11 +17,12 @@ macro_rules! bitmanip_impl {
             #[inline]
             fn bit_ones(&self) -> Vec<u32> {
                 let mut v: Vec<u32> = Vec::new();
+                let mut looper = *self;
 
-                for i in 0..Self::BITS {
-                    if self & 1 << i != 0 {
-                        v.push(i);
-                    }
+                while looper != 0 {
+                    let shift = looper.trailing_zeros();
+                    v.push(shift);
+                    looper &= !(1 << shift);
                 }
 
                 v
@@ -30,11 +31,12 @@ macro_rules! bitmanip_impl {
             #[inline]
             fn bit_zeroes(&self) -> Vec<u32> {
                 let mut v: Vec<u32> = Vec::new();
+                let mut looper = *self;
 
-                for i in 0..Self::BITS {
-                    if self & 1 << i == 0 {
-                        v.push(i);
-                    }
+                while looper != Self::MAX {
+                    let shift = looper.trailing_ones();
+                    v.push(shift);
+                    looper |= 1 << shift;
                 }
 
                 v
