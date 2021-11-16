@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- All methods no longer return `Result` and simply panic on fail
+
+### Removed
+- Removed methods that are redundant to existing methods
+  - `bit_set`, `bit_get`, `bit_on`, `bit_off`, `bit_tog`: Simply use existing bitshift operators
+  - `bit_rev`: Use `reverse_bits()` instead, functions are completely equivalent
+  - `bit_len`: Use `type::BITS` instead, works for all primitive integer types
+- `dotbits::Error` no longer exists - functions will now simply panic on failure
 
 ## [0.2.0] - 2021-11-14
 ### Added
