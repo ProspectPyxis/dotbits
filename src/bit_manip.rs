@@ -1,5 +1,3 @@
-use crate::Error;
-
 macro_rules! bitmanip_impl {
     ($($t:ty),*) => {$(
         impl BitManip for $t {
@@ -8,7 +6,7 @@ macro_rules! bitmanip_impl {
                 let mut v: Vec<bool> = Vec::new();
 
                 for i in 0..Self::bit_len() {
-                    v.push(self.bit_get(i).unwrap());
+                    v.push(self.bit_get(i));
                 }
 
                 v
@@ -19,7 +17,7 @@ macro_rules! bitmanip_impl {
                 let mut v: Vec<usize> = Vec::new();
 
                 for i in 0..Self::bit_len() {
-                    if self.bit_get(i).unwrap() {
+                    if self.bit_get(i) {
                         v.push(i);
                     }
                 }
@@ -32,7 +30,7 @@ macro_rules! bitmanip_impl {
                 let mut v: Vec<usize> = Vec::new();
 
                 for i in 0..Self::bit_len() {
-                    if !self.bit_get(i).unwrap() {
+                    if !self.bit_get(i) {
                         v.push(i);
                     }
                 }
@@ -56,39 +54,27 @@ macro_rules! bitmanip_impl {
             }
 
             #[inline]
-            fn bit_get(&self, pos: usize) -> Result<bool, Error> {
-                if pos >= Self::bit_len() {
-                    return Err(Error::PosOutOfBounds);
-                }
-
-                Ok(self & (1 << pos) != 0)
+            fn bit_get(&self, pos: usize) -> bool {
+                self & (1 << pos) != 0
             }
 
             #[inline]
-            fn bit_set(&mut self, pos: usize, val: bool) -> Result<&mut Self, Error> {
-                if pos >= Self::bit_len() {
-                    return Err(Error::PosOutOfBounds);
-                }
-
+            fn bit_set(&mut self, pos: usize, val: bool) -> &mut Self {
                 *self ^= (Self::MIN.wrapping_sub(val.into()) ^ *self) & (1 << pos);
-                Ok(self)
+                self
             }
 
             #[inline]
-            fn bit_tog(&mut self, pos: usize) -> Result<&mut Self, Error> {
-                if pos >= Self::bit_len() {
-                    return Err(Error::PosOutOfBounds);
-                }
-
+            fn bit_tog(&mut self, pos: usize) -> &mut Self {
                 *self ^= 1 << pos;
-                Ok(self)
+                self
             }
 
             #[inline]
             fn bit_rev(&mut self) -> &mut Self {
                 let original = *self;
                 for (i, j) in (0..Self::bit_len()).rev().zip(0..Self::bit_len()) {
-                    self.bit_set(i, original.bit_get(j).unwrap()).expect("should never fail");
+                    self.bit_set(i, original.bit_get(j));
                 }
 
                 self
@@ -127,7 +113,7 @@ pub trait BitManip {
     ///
     /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
     /// bounds, e.g: `pos >= Self::bit_len()`.
-    fn bit_get(&self, pos: usize) -> Result<bool, Error>;
+    fn bit_get(&self, pos: usize) -> bool;
 
     /// Sets the bit at a specific position.
     ///
@@ -135,7 +121,7 @@ pub trait BitManip {
     ///
     /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
     /// bounds, e.g: `pos >= Self::bit_len()`.
-    fn bit_set(&mut self, pos: usize, val: bool) -> Result<&mut Self, Error>;
+    fn bit_set(&mut self, pos: usize, val: bool) -> &mut Self;
 
     /// Equivalent to `bit_set(&mut self, pos: usize, true)`.
     ///
@@ -144,7 +130,7 @@ pub trait BitManip {
     /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
     /// bounds, e.g: `pos >= Self::bit_len()`.
     #[inline]
-    fn bit_on(&mut self, pos: usize) -> Result<&mut Self, Error> {
+    fn bit_on(&mut self, pos: usize) -> &mut Self {
         self.bit_set(pos, true)
     }
 
@@ -155,7 +141,7 @@ pub trait BitManip {
     /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
     /// bounds, e.g: `pos >= Self::bit_len()`.
     #[inline]
-    fn bit_off(&mut self, pos: usize) -> Result<&mut Self, Error> {
+    fn bit_off(&mut self, pos: usize) -> &mut Self {
         self.bit_set(pos, false)
     }
 
@@ -165,7 +151,7 @@ pub trait BitManip {
     ///
     /// Will return an `Err` with the value [`Error::PosOutOfBounds`] if the index is out of
     /// bounds, e.g: `pos >= Self::bit_len()`.
-    fn bit_tog(&mut self, pos: usize) -> Result<&mut Self, Error>;
+    fn bit_tog(&mut self, pos: usize) -> &mut Self;
 
     /// Reverses all the bits of the implementor type in place.
     ///
