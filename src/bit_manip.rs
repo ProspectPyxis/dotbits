@@ -43,6 +43,19 @@ macro_rules! bitmanip_impl {
             }
 
             #[inline]
+            fn get_bit_range(&self, start: u32, end: u32) -> Self {
+                assert!(start < end && end < Self::BITS);
+                (self & !((Self::MAX << (end - start)).rotate_left(start))) >> start
+            }
+
+            #[inline]
+            fn set_bit_range(&self, start: u32, end: u32, value: Self) -> Self {
+                assert!(start < end && end < Self::BITS);
+                let mask = Self::MAX << (end - start);
+                (self & (mask.rotate_left(start))) | ((value & !mask) << start)
+            }
+
+            #[inline]
             fn signed_left_shift(&self, rhs: i32) -> Self {
                 if rhs.is_negative() { self >> rhs.abs() } else { self << rhs }
             }
@@ -65,6 +78,32 @@ pub trait BitManip {
 
     /// Returns a vector of every "off" position in the number.
     fn bit_zeros(&self) -> Vec<u32>;
+
+    /// Gets the bits of the value in the the given range between `start` and `end`.
+    ///
+    /// `start` is inclusive, and `end` is exclusive.
+    ///
+    /// # Panics
+    ///
+    /// This method panics if:
+    /// - `start` is larger than or equal to `end` (`start >= end`).
+    /// - `end` is larger than `Self::MAX` (`end > Self::MAX`).
+    fn get_bit_range(&self, start: u32, end: u32) -> Self;
+
+    /// Returns a new value with the bits in the given range between `start` and `end` set to the
+    /// given value.
+    ///
+    /// If the value is too big to be contained in the range, any excess bits are ignored and
+    /// dropped.
+    ///
+    /// `start` is inclusive, and `end` is exclusive.
+    ///
+    /// # Panics
+    ///
+    /// This methods panics if:
+    /// - `start` is larger than or equal to `end` (`start >= end`).
+    /// - The `end` is larger than `Self::MAX` (`end > Self::MAX`).
+    fn set_bit_range(&self, start: u32, end: u32, val: Self) -> Self;
 
     /// Computes `self << rhs` if `rhs` is positive, or `self >> rhs` if `rhs` is negative.
     fn signed_left_shift(&self, rhs: i32) -> Self;

@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Crate is now `#![no_std]` compatible
+- `get_bit_range` and `set_bit_range` methods to deal with ranges of bits
 
 ### Changed
 - All methods no longer return `Result` and simply panic on failure

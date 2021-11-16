@@ -15,6 +15,31 @@ fn bit_zeroes() {
 }
 
 #[test]
+fn bit_get_bit_range() {
+    assert_eq!(0b00110011u8.get_bit_range(2, 5), 0b100u8);
+    assert_eq!(0b01010101u8.get_bit_range(0, 3), 0b101u8);
+}
+
+#[test]
+#[should_panic]
+fn bit_get_bit_range_start_ge_end() {
+    0u8.get_bit_range(7, 6);
+}
+
+#[test]
+#[should_panic]
+fn bit_get_bit_range_end_too_big() {
+    0u8.get_bit_range(6, 9);
+}
+
+#[test]
+fn bit_set_bit_range() {
+    assert_eq!(0u8.set_bit_range(2, 5, 0b101), 0b10100u8);
+    assert_eq!(0u8.set_bit_range(3, 5, 0b1111), 0b11000u8);
+    assert_eq!(0b10101010u8.set_bit_range(2, 5, 0b101), 0b10110110u8);
+}
+
+#[test]
 fn bit_vec() {
     assert_eq!(
         0b01010101u8.bits(),
