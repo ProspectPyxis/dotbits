@@ -42,12 +42,19 @@
 //! ```
 
 #![warn(missing_docs)]
+#![no_std]
+
+extern crate alloc;
 
 mod bit_manip;
 mod bit_vec;
 
 pub use crate::bit_manip::BitManip;
 pub use crate::bit_vec::BitVec;
+
+#[cfg(test)]
+#[macro_use]
+extern crate std;
 
 #[cfg(test)]
 mod tests;

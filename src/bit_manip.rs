@@ -1,3 +1,5 @@
+use alloc::vec::Vec;
+
 macro_rules! bitmanip_impl {
     ($($t:ty),*) => {$(
         impl BitManip for $t {

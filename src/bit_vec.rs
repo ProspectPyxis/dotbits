@@ -1,3 +1,5 @@
+use alloc::vec::Vec;
+
 macro_rules! bitvec_into {
     ($($i:ident = $t:ty),*) => {$(
         #[inline]
