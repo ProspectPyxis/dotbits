@@ -55,19 +55,15 @@ macro_rules! bitmanip_impl {
     )*}
 }
 
-/// A trait that provides methods for simple bit manipulation.
+/// A trait that provides utility methods for simple bit manipulation.
 pub trait BitManip {
     /// Converts the implementor type into a `Vec<bool>`.
     fn bits(&self) -> Vec<bool>;
 
-    /// Returns a vector of every "on" position in the number. Functionally equivalent to
-    /// `Self.bits().ones()` - it's recommended to use this over function chaining, as this avoids
-    /// needing to create two vectors and is thus faster.
+    /// Returns a vector of every "on" position in the number.
     fn bit_ones(&self) -> Vec<u32>;
 
-    /// Returns a vector of every "off" position in the number. Functionally equivalent to
-    /// `Self.bits().zeroes()` - it's recommended to use this over function chaining, as this
-    /// avoids needing to create two vectors and is thus faster.
+    /// Returns a vector of every "off" position in the number.
     fn bit_zeroes(&self) -> Vec<u32>;
 
     /// Computes `self << rhs` if `rhs` is positive, or `self >> rhs` if `rhs` is negative.

@@ -20,58 +20,64 @@ pub trait BitVec {
     /// Trims any trailing `false` values from the vector.
     fn trim(&mut self) -> &mut Self;
 
-    /// Attempt to convert the vector into a `u8`. The vector does not have to be the exact size of
-    /// the type to convert successfully.
+    /// Attempt to convert the vector into a `u8`.
     ///
-    /// # Errors
+    /// # Panics
     ///
-    /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
-    /// would overflow the type.
+    /// Panics if the vector is larger than `u8::BITS`.
+    ///
+    /// If you wish to convert the vector while disregarding any excess bits, try calling
+    /// `self.truncate(u8::BITS as usize)` first.
     fn into_u8(self) -> u8;
 
-    /// Attempt to convert the vector into a `u16`. The vector does not have to be the exact size of
-    /// the type to convert successfully.
+    /// Attempt to convert the vector into a `u16`.
     ///
-    /// # Errors
+    /// # Panics
     ///
-    /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
-    /// would overflow the type.
+    /// Panics if the vector is larger than `u16::BITS`.
+    ///
+    /// If you wish to convert the vector while disregarding any excess bits, try calling
+    /// `self.truncate(u16::BITS as usize)` first.
     fn into_u16(self) -> u16;
 
-    /// Attempt to convert the vector into a `u32`. The vector does not have to be the exact size of
-    /// the type to convert successfully.
+    /// Attempt to convert the vector into a `u32`.
     ///
-    /// # Errors
+    /// # Panics
     ///
-    /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
-    /// would overflow the type.
+    /// Panics if the vector is larger than `u32::BITS`.
+    ///
+    /// If you wish to convert the vector while disregarding any excess bits, try calling
+    /// `self.truncate(u32::BITS as usize)` first.
     fn into_u32(self) -> u32;
 
-    /// Attempt to convert the vector into a `u64`. The vector does not have to be the exact size of
-    /// the type to convert successfully.
+    /// Attempt to convert the vector into a `u64`.
     ///
-    /// # Errors
+    /// # Panics
     ///
-    /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
-    /// would overflow the type.
+    /// Panics if the vector is larger than `u64::BITS`.
+    ///
+    /// If you wish to convert the vector while disregarding any excess bits, try calling
+    /// `self.truncate(u64::BITS as usize)` first.
     fn into_u64(self) -> u64;
 
-    /// Attempt to convert the vector into a `u128`. The vector does not have to be the exact size of
-    /// the type to convert successfully.
+    /// Attempt to convert the vector into a `u128`.
     ///
-    /// # Errors
+    /// # Panics
     ///
-    /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
-    /// would overflow the type.
+    /// Panics if the vector is larger than `u128::BITS`.
+    ///
+    /// If you wish to convert the vector while disregarding any excess bits, try calling
+    /// `self.truncate(u128::BITS as usize)` first.
     fn into_u128(self) -> u128;
 
-    /// Attempt to convert the vector into a `usize`. The vector does not have to be the exact size of
-    /// the type to convert successfully.
+    /// Attempt to convert the vector into a `usize`.
     ///
-    /// # Errors
+    /// # Panics
     ///
-    /// Will retun an `Err` with the value [`Error::ConversionOverflow`] if the resulting value
-    /// would overflow the type.
+    /// Panics if the vector is larger than `usize::BITS`.
+    ///
+    /// If you wish to convert the vector while disregarding any excess bits, try calling
+    /// `self.truncate(usize::BITS as usize)` first.
     fn into_usize(self) -> usize;
 }
 
