@@ -81,7 +81,8 @@ pub trait BitManip {
 
     /// Gets the bits of the value in the the given range between `start` and `end`.
     ///
-    /// `start` is inclusive, and `end` is exclusive.
+    /// `start` is inclusive, and `end` is exclusive - a range between 2 and 4 is 2 bits long, and
+    /// includes positions 2 and 3.
     ///
     /// # Panics
     ///
@@ -93,16 +94,16 @@ pub trait BitManip {
     /// Returns a new value with the bits in the given range between `start` and `end` set to the
     /// given value.
     ///
-    /// If the value is too big to be contained in the range, any excess bits are ignored and
-    /// dropped.
+    /// If the value is too big to be contained in the range, any excess bits are ignored.
     ///
-    /// `start` is inclusive, and `end` is exclusive.
+    /// `start` is inclusive, and `end` is exclusive - a range between 2 and 4 is 2 bits long, and
+    /// includes positions 2 and 3.
     ///
     /// # Panics
     ///
     /// This methods panics if:
     /// - `start` is larger than or equal to `end` (`start >= end`).
-    /// - The `end` is larger than `Self::MAX` (`end > Self::MAX`).
+    /// - `end` is larger than `Self::MAX` (`end > Self::MAX`).
     fn set_bit_range(&self, start: u32, end: u32, val: Self) -> Self;
 
     /// Computes `self << rhs` if `rhs` is positive, or `self >> rhs` if `rhs` is negative.
